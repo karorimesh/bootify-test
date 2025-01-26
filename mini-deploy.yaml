@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bootify-test
+  labels:
+    app: bootify-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bootify-test
+  template:
+    metadata:
+      labels:
+        app: bootify-test
+    spec:
+      containers:
+        - name: bootify-test
+          image: karorimesh/bootify-test:main-bec3ca5
+          ports:
+            - containerPort: 8080
+          env:
+            - name: JDBC_DATABASE_URL
+              value: "jdbc:postgresql://127.0.0.1:5432/bootify-test"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bootify-test-service
+spec:
+  selector:
+    app: bootify-test
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 8080
