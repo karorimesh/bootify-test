@@ -21,7 +21,7 @@ spec:
             - containerPort: 8080
           env:
             - name: JDBC_DATABASE_URL
-              value: "jdbc:postgresql://127.0.0.1:5432/bootify-test"
+              value: "jdbc:postgresql://host.docker.internal:5432/bootify-test"
 ---
 apiVersion: v1
 kind: Service
@@ -35,4 +35,4 @@ spec:
     - protocol: TCP
       port: 8080
       targetPort: 8080
-      nodePort: 8080
+      nodePort: 30080
